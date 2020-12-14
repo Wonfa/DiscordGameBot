@@ -4,6 +4,8 @@
 lib/*
 bin/
 bin/*
+data/
+data/*
 
 .classpath
 

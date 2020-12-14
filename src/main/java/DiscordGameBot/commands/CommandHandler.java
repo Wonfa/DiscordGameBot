@@ -5,7 +5,7 @@ import java.util.Map;
 
 import DiscordGameBot.Logger;
 import DiscordGameBot.objects.delegate1;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CommandHandler {
 	final Map<String, delegate1<Command>> commands;
@@ -18,11 +18,12 @@ public class CommandHandler {
 		commands.put(command, event);
 	}
 	
-	public void handle(MessageReceivedEvent messageEvent) {
+	public void handle(GuildMessageReceivedEvent messageEvent) {
 		Command command = new Command(messageEvent);
 		delegate1<Command> event = commands.get(command.command);
 		
 		if (event == null) {
+			Logger.print(command.toString());
 			Logger.print("No event for command: " + command.command);
 			return;
 		}

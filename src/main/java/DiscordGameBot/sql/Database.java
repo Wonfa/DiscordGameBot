@@ -66,6 +66,11 @@ public class Database extends LowDatabase {
 		query.append(");");
 		statement(query.toString(), values);
 	}
+	
+	public Result select(String tableName, String key, String value) {
+		List<Result> results = fetch("SELECT * from " + tableName + " WHERE ? = ?", key, value);
+		return results.size() <= 0 ? null : results.get(0);
+	}
 
 	public List<Result> collect(String tableName) {
 		return fetch("SELECT * from " + tableName);

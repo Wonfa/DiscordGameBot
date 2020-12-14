@@ -14,8 +14,7 @@ public class Bot {
 	JDA api;
 	EventHandler manager;
 	
-	public Bot(String token, EventHandler manager) {
-		this.manager = manager;
+	public Bot(String token) {
 		try {
 			this.api = JDABuilder.createDefault(token).build();
 		} catch (LoginException e) {
@@ -27,10 +26,19 @@ public class Bot {
 		Logger.print("Successfully Launched Bot.");
 	}
 	
+	public void disconnect() {
+		this.api.shutdown();
+		Logger.print("Disconnecting Bot...");
+	}
+	
+	public void attach(EventHandler manager) {
+		this.manager = manager;
+	}
+	
 	private class Listener extends ListenerAdapter {
 		@Override
 		public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-			attempt(() -> manager.onMessageReceived());
+			attempt(() -> manager.onMessageReceived(event));
 		}
 
 		@Override
